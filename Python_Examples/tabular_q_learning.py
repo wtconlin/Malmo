@@ -374,7 +374,7 @@ for imap in xrange(num_maps):
         
         print "\nMap %d - Mission %d of %d:" % ( imap, i+1, num_repeats )
 
-        my_mission_record = MalmoPython.MissionRecordSpec( "./save_%s-map%d-rep%d.tgz" % (expID, imap, i) )
+        my_mission_record = MalmoPython.MissionRecordSpec( "./mission_records/save_%s-map%d-rep%d.tgz" % (expID, imap, i) )
         my_mission_record.recordCommands()
         my_mission_record.recordMP4(20, 400000)
         my_mission_record.recordRewards()
