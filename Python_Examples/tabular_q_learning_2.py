@@ -163,8 +163,8 @@ class TabQAgent:
         # take first action
         total_reward += self.act(world_state,agent_host,current_r)
         
-        require_move = False
-        check_expected_position = True
+        require_move = True
+        check_expected_position = False
         
         # main loop:
         while world_state.is_mission_running:
@@ -181,12 +181,24 @@ class TabQAgent:
                     curr_x = obs[u'XPos']
                     curr_z = obs[u'ZPos']
                     if require_move:
-                        if math.hypot( curr_x - prev_x, curr_z - prev_z ) > tol:
+                        if math.hypot( curr_x - prev_x, curr_z - prev_z ) > tol: # if agent moved
                             print 'received.'
                             break
+                            # agent_host.sendCommand(self.actions[4])
+                            # if self.prev_a == 1: # ["movenorth 1", "movesouth 1", "movewest 1", "moveeast 1", "attack 1"]
+                                # agent_host.sendCommand(self.actions[0])
+                            # if self.prev_a == 0:
+                                # agent_host.sendCommand(self.actions[1])
+                            # if self.prev_a == 2:
+                                # agent_host.sendCommand(self.actions[3])
+                            # if self.prev_a == 3:
+                                # agent_host.sendCommand(self.actions[2])
                     else:
                         print 'received.'
                         break
+                if self.prev_a == 4: # index, specified earlier
+                    print 'special'
+                    break
             # wait for a frame to arrive after that
             num_frames_seen = world_state.number_of_video_frames_since_last_state
             while world_state.is_mission_running and world_state.number_of_video_frames_since_last_state == num_frames_seen:
@@ -335,7 +347,7 @@ else:
 for imap in xrange(num_maps):
 
     # -- set up the agent -- #
-    actionSet = ["movenorth 1", "movesouth 1", "movewest 1", "moveeast 1"]
+    actionSet = ["movenorth 1", "movesouth 1", "movewest 1", "moveeast 1", "attack 1"]
 
     agent = TabQAgent(
         actions=actionSet,
@@ -356,10 +368,13 @@ for imap in xrange(num_maps):
     my_mission.allowAllDiscreteMovementCommands()
     my_mission.requestVideo( 320, 240 )
     my_mission.setViewpoint( 1 )
-    # add holes for interest
+    # add holes and obstacles for interest
     for z in range(2,12,2):
         x = random.randint(1,3)
         my_mission.drawBlock( x,45,z,"lava")
+    # for z in range(2,12,2):
+        # x = random.randint(1,3)
+        # my_mission.drawBlock( x,47,z,"sandstone")
 
     my_clients = MalmoPython.ClientPool()
     my_clients.add(MalmoPython.ClientInfo('127.0.0.1', 10000)) # add Minecraft machines here as available

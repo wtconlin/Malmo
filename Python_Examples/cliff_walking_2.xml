@@ -28,6 +28,7 @@
         <DrawBlock   x="4"   y="45"  z="1"  type="cobblestone" />                           <!-- the starting marker -->
         <DrawBlock   x="4"   y="45"  z="12" type="lapis_block" />                           <!-- the destination marker -->
         <DrawItem    x="4"   y="46"  z="12" type="diamond" />                               <!-- another destination marker -->
+        <DrawItem    x="4"   y="46"  z="1" type="sandstone" />
       </DrawingDecorator>
       <ServerQuitFromTimeUp timeLimitMs="1000000"/>
       <ServerQuitWhenAnyAgentFinishes/>
@@ -37,7 +38,7 @@
   <AgentSection mode="Survival">
     <Name>Cristina2</Name>
     <AgentStart>
-      <Placement x="4.5" y="46.0" z="1.5" pitch="30" yaw="0"/>
+      <Placement x="4.5" y="46.0" z="1.5" pitch="0" yaw="0"/>
     </AgentStart>
     <AgentHandlers>
 	  <ObservationFromFullStats/>
